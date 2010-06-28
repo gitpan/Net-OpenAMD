@@ -1,0 +1,23 @@
+[
+    {
+        "name" : "JohnnyX",
+        "x" : "32.54091324",
+        "y" : "54.10958384",
+        "interests" : [
+            "new tech",
+            "radio",
+            "lockpicking",
+            "crypto",
+            "telephones",
+            "social engineering",
+            "hacker spaces",
+            "hardware hacking",
+            "nostalgia",
+            "communities",
+            "science",
+            "network security",
+            "malicious software",
+            "pen testing"
+        ],
+    }
+]

@@ -1,0 +1,10 @@
+[
+    {
+        "speakers" : ["Judas","JohnnyX"],
+        "title" : "Ancient Egyptian Music and DRM",
+        "abstract" : "A discussion of the development of musical notation, which was designed as a means of reproducing music while making it impossible for the general public to perform without permission.",
+        "time" : "2008/7/18 13:00:00",
+        "track" : "Hooper",
+        "interests" : ["media","crypto"]
+    }
+]
