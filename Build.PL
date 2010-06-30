@@ -10,13 +10,14 @@ my $builder = Module::Build->new(
     dist_version_from   => 'lib/Net/OpenAMD.pm',
     build_requires => {
         'Test::More' => 0,
+        'Mojolicious' => 0,
     },
     requires => {
         'version'        => 0,
         'LWP::UserAgent' => 0,
         'Net::OAuth'     => 0,
         'URI'            => 0,
-        'JSON::Any'      => 0,
+        'JSON'           => 0,
     },
     add_to_cleanup      => [ 
         'Net-OpenAMD-*',

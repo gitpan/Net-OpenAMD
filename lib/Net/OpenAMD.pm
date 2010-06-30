@@ -1,8 +1,8 @@
 package Net::OpenAMD;
 
-# $AFresh1: OpenAMD.pm,v 1.12 2010/06/28 20:32:32 andrew Exp $
+# $AFresh1: OpenAMD.pm,v 1.13 2010/06/30 05:30:17 andrew Exp $
 
-use version; our $VERSION = qv('0.0.1');
+use version; our $VERSION = qv('0.0.2');
 my $BASE_URI = 'https://api.hope.net/api/';
 
 use warnings;
@@ -15,7 +15,7 @@ use Scalar::Util qw( refaddr );
 use LWP::UserAgent;
 use URI;
 use Net::OAuth;
-use JSON::Any;
+use JSON qw/ from_json /;
 
 {
 
@@ -48,7 +48,10 @@ use JSON::Any;
         my $response = $ua_of{$ident}->get($uri);
         croak $response->status_line if !$response->is_success;
 
-        return JSON::Any->jsonToObj( $response->decoded_content );
+        my @data = map { from_json($_) } split /\r?\n/xms,
+            $response->decoded_content;
+
+        return @data == 1 ? $data[0] : \@data;
     }
 
     sub location  { return shift->get( 'location',  @_ ) }

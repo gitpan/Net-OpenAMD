@@ -12,8 +12,9 @@ WriteMakefile
                            'URI' => 0,
                            'LWP::UserAgent' => 0,
                            'version' => 0,
+                           'JSON' => 0,
                            'Net::OAuth' => 0,
-                           'JSON::Any' => 0
+                           'Mojolicious' => 0
                          }
         )
 ;
