@@ -1,13 +1,13 @@
 package Net::OpenAMD;
 
-# $AFresh1: OpenAMD.pm,v 1.13 2010/06/30 05:30:17 andrew Exp $
-
-use version; our $VERSION = qv('0.0.2');
-my $BASE_URI = 'https://api.hope.net/api/';
+# $AFresh1: OpenAMD.pm,v 1.18 2010/07/13 00:14:21 andrew Exp $
 
 use warnings;
 use strict;
 use Carp;
+
+use version; our $VERSION = qv('0.0.3');
+my $BASE_URI = 'https://api.hope.net/api/';
 
 use Scalar::Util qw( refaddr );
 *_ident = \&refaddr;
@@ -15,11 +15,15 @@ use Scalar::Util qw( refaddr );
 use LWP::UserAgent;
 use URI;
 use Net::OAuth;
-use JSON qw/ from_json /;
+use JSON;
 
 {
 
-    my @attr_refs = \( my %base_uri_of, my %ua_of, my %auth_of, );
+    my @attr_refs = \(
+        my %base_uri_of,
+        my %ua_of, my %auth_of, my %actions_of,
+        my %json_of,
+    );
 
     sub new {
         my ( $class, $options ) = @_;
@@ -32,6 +36,15 @@ use JSON qw/ from_json /;
 
         $base_uri_of{$ident} = $options->{base_uri} || $BASE_URI;
         $ua_of{$ident}       = $options->{ua}       || LWP::UserAgent->new();
+        $json_of{$ident}     = $options->{json}     || JSON->new();
+        $actions_of{$ident}  = $options->{actions}
+            || [qw( location speakers talks interests users )];
+
+        foreach my $action ( @{ $actions_of{$ident} } ) {
+            ## no critic
+            no strict 'refs';
+            *{$action} = sub { shift->get( $action, @_ ) };
+        }
 
         # XXX Authenticate
 
@@ -42,24 +55,22 @@ use JSON qw/ from_json /;
         my ( $self, $action, $query ) = @_;
         my $ident = _ident($self);
 
-        my $uri = URI->new_abs( $action, $base_uri_of{$ident} );
-        $uri->query($query);
+        my $uri = URI->new_abs( $action . '/', $base_uri_of{$ident} );
+        $uri->query_form($query);
 
         my $response = $ua_of{$ident}->get($uri);
         croak $response->status_line if !$response->is_success;
 
-        my @data = map { from_json($_) } split /\r?\n/xms,
-            $response->decoded_content;
+        my $data;
+        eval {
+            $data = $json_of{$ident}->decode( $response->decoded_content );
+        };
+        croak "Invalid JSON from [$uri]" if $@;
 
-        return @data == 1 ? $data[0] : \@data;
+        return $data;
     }
 
-    sub location  { return shift->get( 'location',  @_ ) }
-    sub speakers  { return shift->get( 'speakers',  @_ ) }
-    sub talks     { return shift->get( 'talks',     @_ ) }
-    sub interests { return shift->get( 'interests', @_ ) }
-    sub users     { return shift->get( 'users',     @_ ) }
-    sub stats     { croak 'Unused feature' }
+    sub stats { croak 'Unused feature' }
 
     sub DESTROY {
         my ($self) = @_;
@@ -84,7 +95,7 @@ Net::OpenAMD - Perl interface to the OpenAMD API
 
 =head1 VERSION
 
-This document describes Net::OpenAMD version 0.0.1
+This document describes Net::OpenAMD version 0.0.3
 
 
 =head1 SYNOPSIS
@@ -128,7 +139,7 @@ Current options are
 A URL to the API, currently defaults to https://api.hope.net/api/
 
 Most likely it should end with a / to make URI happy, so notice that if you
-having 404 errors you don't expect.
+are having 404 errors you don't expect.
 
 =item ua
 
@@ -169,7 +180,7 @@ Helper methods you can call as $amd->method($params) are:
 
 =back
 
-Unless specified, there is nothing different about any of the helper methods
+Unless specified, there is nothing different about any of the action methods
 than just calling get($action) instead.  Depending on API changes, this may
 not always be the case.
 

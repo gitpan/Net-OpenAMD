@@ -1,18 +1,18 @@
 #!perl
 package NetworkTests;
 
-# $AFresh1: network_tests.t,v 1.6 2010/06/30 05:30:17 andrew Exp $
+# $AFresh1: network_tests.t,v 1.8 2010/07/13 00:14:43 andrew Exp $
 
 use strict;
 use warnings;
 
 use Test::More;
 use Net::OpenAMD;
+use Data::Dumper;
 
 if ( !caller() ) {
     if ( $ENV{'NETWORK_TESTS'} ) {
-
-        # plan tests => ??;
+        plan tests => 13;
     }
     else {
         plan skip_all =>
@@ -23,9 +23,9 @@ if ( !caller() ) {
         location => [
             {   args   => undef,
                 expect => [
-                    {   'y'    => '7.33745396305',
+                    {   'y'    => '43.4861220266',
                         'user' => 'user6',
-                        'x'    => '41.0283030135'
+                        'x'    => '18.2468971683'
                     },
                     {   'y'    => '36.5212503999',
                         'user' => 'user7',
@@ -105,10 +105,18 @@ if ( !caller() ) {
                     }
                 ],
             },
+            {   args   => [ user => 'user0' ],
+                expect => [],
+            },
         ],
         speakers => [
             {   args   => undef,
                 expect => [
+                    [   '9000',
+                        {   'name' => 'The Cheshire Catalyst',
+                            'bio'  => 'Jacob\'s bio'
+                        }
+                    ],
                     [   'user0',
                         {   'name' => 'Jacob',
                             'bio'  => 'Jacob\'s bio'
@@ -277,7 +285,7 @@ if ( !caller() ) {
         = Net::OpenAMD->new( { base_uri => 'http://api.hope.net/api/', } );
     run_tests( $amd, \%tests );
 
-    done_testing();
+    #done_testing();
 }
 
 1;

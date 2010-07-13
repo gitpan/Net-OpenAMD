@@ -9,7 +9,7 @@ my $builder = Module::Build->new(
     dist_author         => 'Andrew Fresh <andrew@cpan.org>',
     dist_version_from   => 'lib/Net/OpenAMD.pm',
     build_requires => {
-        'Test::More' => 0,
+        'Test::More'  => 0,
         'Mojolicious' => 0,
     },
     requires => {

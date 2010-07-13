@@ -1,5 +1,5 @@
 #!perl
-# $AFresh1: local_server.t,v 1.10 2010/06/30 05:30:17 andrew Exp $
+# $AFresh1: local_server.t,v 1.11 2010/07/01 17:59:55 andrew Exp $
 use Test::More;
 
 use strict;
@@ -15,6 +15,9 @@ BEGIN {
     eval "use Test::Mojo::Server";
     if ($@) {
         plan skip_all => "Test::Mojo::Server required for testing local server";
+    }
+    elsif ($] < 5.01) {
+        plan skip_all => 'test_server.pl requires perl 5.10 or higher';
     }
     else {
         plan tests => 15;

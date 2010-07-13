@@ -1,6 +1,17 @@
 Revision history for Net-OpenAMD
 
+0.0.3  Mon Jul 12 17:15:51 2010
+       better handling of bad JSON from the API (just report, no fixing)
+       actually add query strings properly to the request uri
+       more cleanup
+       fix tests for /location
+       generate helper subs
+
+0.0.2  Tue Jun 29 22:35:10 2010
+       Tests that pass against http://api.hope.net as well as a local server.
+       No auth yet, but we will see.
+
 0.0.1  Thu Jun 24 14:43:47 2010
        Initial release.
 
-$AFresh1: Changes,v 1.2 2010/06/24 22:10:10 andrew Exp $
+$AFresh1: Changes,v 1.5 2010/07/13 00:16:08 andrew Exp $

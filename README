@@ -2,7 +2,7 @@ NAME
     Net::OpenAMD - Perl interface to the OpenAMD API
 
 VERSION
-    This document describes Net::OpenAMD version 0.0.1
+    This document describes Net::OpenAMD version 0.0.3
 
 SYNOPSIS
         use Net::OpenAMD;
@@ -37,7 +37,7 @@ INTERFACE
         A URL to the API, currently defaults to https://api.hope.net/api/
 
         Most likely it should end with a / to make URI happy, so notice that
-        if you having 404 errors you don't expect.
+        if you are having 404 errors you don't expect.
 
     ua  Should be a pre-configured LWP::UserAgent or similar that returns a
         HTTP::Response object when its get method is called with a URI.
@@ -64,7 +64,7 @@ INTERFACE
     talks
     users
 
-    Unless specified, there is nothing different about any of the helper
+    Unless specified, there is nothing different about any of the action
     methods than just calling get($action) instead. Depending on API
     changes, this may not always be the case.
 
