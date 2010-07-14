@@ -1,6 +1,6 @@
 ---
 name: Net-OpenAMD
-version: v0.0.3
+version: v0.0.4
 author:
   - 'Andrew Fresh <andrew@cpan.org>'
 abstract: Perl interface to the OpenAMD API
