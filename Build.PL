@@ -10,6 +10,7 @@ my $builder = Module::Build->new(
     dist_version_from   => 'lib/Net/OpenAMD.pm',
     build_requires => {
         'Test::More'  => 0,
+        'Test::Deep'  => 0,
         'Mojolicious' => 0,
     },
     requires => {

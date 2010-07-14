@@ -13,6 +13,7 @@ WriteMakefile
                            'LWP::UserAgent' => 0,
                            'version' => 0,
                            'JSON' => 0,
+                           'Test::Deep' => 0,
                            'Net::OAuth' => 0,
                            'Mojolicious' => 0
                          }
