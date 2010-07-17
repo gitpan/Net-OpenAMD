@@ -1,6 +1,6 @@
 ---
 name: Net-OpenAMD
-version: v0.1.0
+version: v0.1.1
 author:
   - 'Andrew Fresh <andrew@cpan.org>'
 abstract: Perl interface to the OpenAMD API
@@ -22,7 +22,7 @@ configure_requires:
 provides:
   Net::OpenAMD:
     file: lib/Net/OpenAMD.pm
-    version: v0.1.0
+    version: v0.1.1
 generated_by: Module::Build version 0.340201
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html

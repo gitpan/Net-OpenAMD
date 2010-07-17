@@ -7,6 +7,7 @@ MANIFEST.SKIP
 META.yml
 README
 script/test_server.pl
+script/update_json.pl
 t/00.load.t
 t/data/interests
 t/data/location

@@ -1,5 +1,9 @@
 Revision history for Net-OpenAMD
 
+0.1.1  Fri Jul 16 21:47:39 2010
+       Fix tests so they pass, mostly by not overriding the default and 
+         just using https://api.hope.net/api/
+
 0.1.0  Tue Jul 13 22:20:41 2010
        The API is producing useful data so grab that to use for testing.
        That means I can test with what the API provides not just what 
@@ -21,4 +25,4 @@ Revision history for Net-OpenAMD
 0.0.1  Thu Jun 24 14:43:47 2010
        Initial release.
 
-$AFresh1: Changes,v 1.8 2010/07/14 05:21:23 andrew Exp $
+$AFresh1: Changes,v 1.9 2010/07/17 11:48:28 andrew Exp $

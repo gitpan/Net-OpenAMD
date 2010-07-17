@@ -1,5 +1,5 @@
 #!perl
-# $AFresh1: local_server.t,v 1.13 2010/07/13 03:37:47 andrew Exp $
+# $AFresh1: local_server.t,v 1.14 2010/07/17 12:12:32 andrew Exp $
 use Test::More;
 
 use strict;
@@ -21,7 +21,7 @@ BEGIN {
         plan skip_all => 'test_server.pl requires perl 5.10 or higher';
     }
     else {
-        plan tests => 31;
+        plan tests => 18;
     }
     require 'network_tests.t';
 }

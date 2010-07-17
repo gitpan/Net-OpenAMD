@@ -1,12 +1,12 @@
 package Net::OpenAMD;
 
-# $AFresh1: OpenAMD.pm,v 1.19 2010/07/14 05:21:23 andrew Exp $
+# $AFresh1: OpenAMD.pm,v 1.20 2010/07/17 11:48:28 andrew Exp $
 
 use warnings;
 use strict;
 use Carp;
 
-use version; our $VERSION = qv('0.1.0');
+use version; our $VERSION = qv('0.1.1');
 my $BASE_URI = 'https://api.hope.net/api/';
 
 use Scalar::Util qw( refaddr );

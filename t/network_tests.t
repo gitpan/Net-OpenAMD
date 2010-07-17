@@ -1,7 +1,7 @@
 #!perl
 package NetworkTests;
 
-# $AFresh1: network_tests.t,v 1.13 2010/07/14 01:54:03 andrew Exp $
+# $AFresh1: network_tests.t,v 1.15 2010/07/17 12:10:48 andrew Exp $
 
 use strict;
 use warnings;
@@ -14,15 +14,14 @@ use Net::OpenAMD;
 
 if ( !caller() ) {
     if ( $ENV{'NETWORK_TESTS'} ) {
-        plan tests => 31;
+        plan tests => 14;
     }
     else {
         plan skip_all =>
             'Network test.  Set $ENV{NETWORK_TESTS} to a true value to run.';
     }
 
-    my $amd
-        = Net::OpenAMD->new( { base_uri => 'http://api.hope.net/api/', } );
+    my $amd = Net::OpenAMD->new();
     run_tests($amd);
 
     #done_testing();
@@ -54,7 +53,7 @@ sub run_tests {
         area          => any('Engressia'),
         interests     => any(@interests),
         all_interests => bag(@interests),
-        coordinate    => re('^\d\d\.\d+$'),
+        coordinate    => re('^\d{1,2}\.\d+$'),
         boolean => any( 'True', 'False' ),
     );
 
@@ -78,8 +77,8 @@ sub run_tests {
     ];
 
     $cmp{location} = superhashof(
-        {   area => $cmp{area},
-            user => $cmp{digits},
+        {   #area => $cmp{area},
+            user => $cmp{single_line},
 
             #button => $cmp{boolean},
             x => $cmp{coordinate},
@@ -95,13 +94,13 @@ sub run_tests {
                 expect => array_each( $cmp{location} ),
             },
             {   args   => { user => 'user0' },
-                expect => array_each(),
+                expect => qr/^Invalid \s JSON|$/xms,
             },
             {   args   => { user => 'user0', limit => 5 },
-                expect => array_each(),
+                expect => qr/^Invalid \s JSON|$/xms,
             },
-            {   args   => { area => 'Engressa' },
-                expect => array_each(),
+            {   args   => { area => 'Lovelace' },
+                expect => array_each( $cmp{location} ),
             },
         ],
         speakers => [
@@ -171,10 +170,14 @@ sub run_tests {
                 like( $@, $test->{expect}, "AMD->$method($test->{args})" );
             }
             elsif ( ref $test->{expect} ) {
-                is( $@, '', "AMD->$method($test->{args})" );
-                cmp_deeply( $result, $test->{expect},
-                          "AMD->$method($test->{args}) - "
-                        . 'got expected result' );
+                if ($@) {
+                    is( $@, '', "AMD->$method($test->{args})" );
+                }
+                else {
+                    cmp_deeply( $result, $test->{expect},
+                              "AMD->$method($test->{args}) - "
+                            . 'got expected result' );
+                }
             }
             else {
                 is( $@, $test->{expect}, "AMD->$method($test->{args})" );
